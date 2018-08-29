@@ -15,9 +15,41 @@ namespace Assignment4_ASP.NET.Controllers
         private Assignment4_ASPNETContext db = new Assignment4_ASPNETContext();
 
         // GET: Customers
-        public ActionResult Index()
+        //public ActionResult Index()
+        //{
+        //    return View(db.Customers.ToList());
+        //}
+
+        public ActionResult Index(string sortOrder)
         {
-            return View(db.Customers.ToList());
+            ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "Name" : "";
+            ViewBag.DateSortParm = sortOrder == "Date" ? "Date_Desc" : "Date";
+            ViewBag.AmountSortParm = sortOrder == "Amount" ? "Amount_Desc" : "Amount";
+
+            var customers = from s in db.Customers
+                           select s;
+            switch (sortOrder)
+            {
+                case "Name":
+                    customers = customers.OrderByDescending(s => s.Name);
+                    break;
+                case "Date":
+                    customers = customers.OrderBy(s => s.DateOfBirth);
+                    break;
+                case "Date_Desc":
+                    customers = customers.OrderByDescending(s => s.DateOfBirth);
+                    break;
+                case "Amount":
+                    customers = customers.OrderBy(s => s.Amount);
+                    break;
+                case "Amount_Desc":
+                    customers = customers.OrderByDescending(s => s.Amount);
+                    break;
+                default:
+                    customers = customers.OrderBy(s => s.Name);
+                    break;
+            }
+            return View(customers.ToList());
         }
 
         // GET: Customers/Details/5
