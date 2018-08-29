@@ -20,14 +20,20 @@ namespace Assignment4_ASP.NET.Controllers
         //    return View(db.Customers.ToList());
         //}
 
-        public ActionResult Index(string sortOrder)
+        public ActionResult Index(string sortOrder, string searchString)
         {
             ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "Name" : "";
             ViewBag.DateSortParm = sortOrder == "Date" ? "Date_Desc" : "Date";
             ViewBag.AmountSortParm = sortOrder == "Amount" ? "Amount_Desc" : "Amount";
 
             var customers = from s in db.Customers
-                           select s;
+                            select s;
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                customers = customers.Where(s => s.Name.Contains(searchString)
+                                       );
+            }
+
             switch (sortOrder)
             {
                 case "Name":
