@@ -7,6 +7,8 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Assignment4_ASP.NET.Models;
+using PagedList;
+
 
 namespace Assignment4_ASP.NET.Controllers
 {
@@ -20,11 +22,24 @@ namespace Assignment4_ASP.NET.Controllers
         //    return View(db.Customers.ToList());
         //}
 
-        public ActionResult Index(string sortOrder, string searchString)
+        public ActionResult Index(string sortOrder, string currentFilter, string searchString, int? page)
         {
+            ViewBag.CurrentSort = sortOrder;
             ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "Name" : "";
             ViewBag.DateSortParm = sortOrder == "Date" ? "Date_Desc" : "Date";
             ViewBag.AmountSortParm = sortOrder == "Amount" ? "Amount_Desc" : "Amount";
+
+            if (searchString != null)
+            {
+                page = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+
+            ViewBag.CurrentFilter = searchString;
+
 
             var customers = from s in db.Customers
                             select s;
@@ -55,7 +70,10 @@ namespace Assignment4_ASP.NET.Controllers
                     customers = customers.OrderBy(s => s.Name);
                     break;
             }
-            return View(customers.ToList());
+            int pageSize = 10;
+            int pageNumber = (page ?? 1);
+            return View(customers.ToPagedList(pageNumber, pageSize));
+            //return View(customers.ToList());
         }
 
         // GET: Customers/Details/5

@@ -1,4 +1,8 @@
-﻿@model IEnumerable<Assignment4_ASP.NET.Models.Customer>
+﻿@*@model IEnumerable<Assignment4_ASP.NET.Models.Customer>*@
+@model PagedList.IPagedList<Assignment4_ASP.NET.Models.Customer>
+@using PagedList.Mvc;
+
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
 
 @{
     ViewBag.Title = "Index";
@@ -13,7 +17,7 @@
 @using (Html.BeginForm())
 {
     <p>
-        Find by Name: @Html.TextBox("SearchString")
+        Find by name: @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
         <input type="submit" value="Search" />
     </p>
 }
@@ -21,17 +25,17 @@
 <table class="table">
     <tr>
         <th>
-            @Html.ActionLink("Name", "Index", new { sortOrder = ViewBag.NameSortParm })
+            @Html.ActionLink("Name", "Index", new { sortOrder = ViewBag.NameSortParm, currentFilter = ViewBag.CurrentFilter })
 
             @*@Html.DisplayNameFor(model => model.Name)*@
         </th>
         <th>
-            @Html.ActionLink("Date of Birth", "Index", new { sortOrder = ViewBag.DateSortParm })
+            @Html.ActionLink("Date of Birth", "Index", new { sortOrder = ViewBag.DateSortParm, currentFilter = ViewBag.CurrentFilter })
 
             @*@Html.DisplayNameFor(model => model.DateOfBirth)*@
         </th>
         <th>
-            @Html.ActionLink("Amount", "Index", new { sortOrder = ViewBag.AmountSortParm })
+            @Html.ActionLink("Amount", "Index", new { sortOrder = ViewBag.AmountSortParm, currentFilter = ViewBag.CurrentFilter })
 
             @*@Html.DisplayNameFor(model => model.Amount)*@
         </th>
@@ -59,3 +63,8 @@
     }
 
 </table>
+<br>
+Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+@Html.PagedListPager(Model, page => Url.Action("Index",
+    new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
