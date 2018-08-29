@@ -167,6 +167,7 @@
     </Compile>
     <Compile Include="Models\Assignment4_ASPNETContext.cs" />
     <Compile Include="Models\Customer.cs" />
+    <Compile Include="Models\MyConfiguration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

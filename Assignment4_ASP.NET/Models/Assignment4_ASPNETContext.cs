@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Web;
+using Assignment4_ASP.NET.Models;
 
 namespace Assignment4_ASP.NET.Models
 {
+    [DbConfigurationType(typeof(MyConfiguration))]
     public class Assignment4_ASPNETContext : DbContext
     {
         // You can add custom code to this file. Changes will not be overwritten.
