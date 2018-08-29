@@ -5,6 +5,9 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using System.Data.Entity.Infrastructure.Interception;
+using Assignment4_ASP.NET.Models;
+
 
 namespace Assignment4_ASP.NET
 {
@@ -16,6 +19,9 @@ namespace Assignment4_ASP.NET
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+            //DbInterception.Add(new CustomerInterceptorTransientErrors());
+            DbInterception.Add(new CustomerInterceptorLogging());
+
         }
     }
 }
