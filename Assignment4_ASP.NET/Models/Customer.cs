@@ -14,6 +14,7 @@ namespace Assignment4_ASP.NET.Models
         [StringLength(100)]
         public string Name { get; set; }
 
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         [DataType(DataType.Date)]
         public DateTime DateOfBirth { get; set; }
 
