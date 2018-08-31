@@ -8,6 +8,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Assignment4_ASP.NET.Models;
+using System.Data.Entity.Infrastructure;
 
 namespace Assignment4_ASP.NET.Controllers
 {
@@ -91,7 +92,7 @@ namespace Assignment4_ASP.NET.Controllers
         }
 
         // GET: AsyncCustomers/Delete/5
-        public async Task<ActionResult> Delete(int? id)
+        public async Task<ActionResult> Delete(int? id, bool? concurrencyError)
         {
             if (id == null)
             {
@@ -102,6 +103,15 @@ namespace Assignment4_ASP.NET.Controllers
             {
                 return HttpNotFound();
             }
+            if (concurrencyError.GetValueOrDefault())
+            {
+                ViewBag.ConcurrencyErrorMessage = "The record you attempted to delete "
+                    + "was modified by another user after you got the original values. "
+                    + "The delete operation was canceled and the current values in the "
+                    + "database have been displayed. If you still want to delete this "
+                    + "record, click the Delete button again. Otherwise "
+                    + "click the Back to List hyperlink.";
+            }
             return View(customer);
         }
 
@@ -110,10 +120,25 @@ namespace Assignment4_ASP.NET.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteConfirmed(int id)
         {
-            Customer customer = await db.Customers.FindAsync(id);
-            db.Customers.Remove(customer);
-            await db.SaveChangesAsync();
+            try
+            {
+                Customer customer = await db.Customers.FindAsync(id);
+                db.Customers.Remove(customer);
+                await db.SaveChangesAsync();
+                //return RedirectToAction("Index");
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                return RedirectToAction("Delete", new { concurrencyError = true, id = id });
+            }
+            catch (DataException /* dex */)
+            {
+                //Log the error (uncomment dex variable name after DataException and add a line here to write a log.
+                ModelState.AddModelError(string.Empty, "Unable to delete. Try again, and if the problem persists contact your system administrator.");
+                
+            }
             return RedirectToAction("Index");
+
         }
 
         protected override void Dispose(bool disposing)
