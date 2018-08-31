@@ -24,6 +24,7 @@ namespace Assignment4_ASP.NET.Models
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
               modelBuilder.Entity<Customer>().MapToStoredProcedures();
+              modelBuilder.Entity<Customer>().Property(p => p.RowVersion).IsConcurrencyToken();
         }
 
         public System.Data.Entity.DbSet<Assignment4_ASP.NET.Models.Customer> Customers { get; set; }
