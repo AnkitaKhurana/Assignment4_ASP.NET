@@ -176,6 +176,10 @@
     <Compile Include="Migrations\201808310510247_InitialCreate1.Designer.cs">
       <DependentUpon>201808310510247_InitialCreate1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201808310716047_StoredProcedure.cs" />
+    <Compile Include="Migrations\201808310716047_StoredProcedure.Designer.cs">
+      <DependentUpon>201808310716047_StoredProcedure.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Assignment4_ASPNETContext.cs" />
     <Compile Include="Models\Customer.cs" />
@@ -258,6 +262,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201808310510247_InitialCreate1.resx">
       <DependentUpon>201808310510247_InitialCreate1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201808310716047_StoredProcedure.resx">
+      <DependentUpon>201808310716047_StoredProcedure.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

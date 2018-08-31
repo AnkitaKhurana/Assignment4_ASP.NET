@@ -29,7 +29,7 @@ namespace Assignment4_ASP.NET.Models
             }
             else
             {
-                _logger.TraceApi("SQL Database", "SchoolInterceptor.ScalarExecuted", _stopwatch.Elapsed, "Command: {0}: ", command.CommandText);
+                _logger.TraceApi("SQL Database", "CustomerInterceptor.ScalarExecuted", _stopwatch.Elapsed, "Command: {0}: ", command.CommandText);
             }
             base.ScalarExecuted(command, interceptionContext);
         }
@@ -49,7 +49,7 @@ namespace Assignment4_ASP.NET.Models
             }
             else
             {
-                _logger.TraceApi("SQL Database", "SchoolInterceptor.NonQueryExecuted", _stopwatch.Elapsed, "Command: {0}: ", command.CommandText);
+                _logger.TraceApi("SQL Database", "CustomerInterceptor.NonQueryExecuted", _stopwatch.Elapsed, "Command: {0}: ", command.CommandText);
             }
             base.NonQueryExecuted(command, interceptionContext);
         }
@@ -68,7 +68,7 @@ namespace Assignment4_ASP.NET.Models
             }
             else
             {
-                _logger.TraceApi("SQL Database", "SchoolInterceptor.ReaderExecuted", _stopwatch.Elapsed, "Command: {0}: ", command.CommandText);
+                _logger.TraceApi("SQL Database", "CustomerInterceptor.ReaderExecuted", _stopwatch.Elapsed, "Command: {0}: ", command.CommandText);
             }
             base.ReaderExecuted(command, interceptionContext);
         }
