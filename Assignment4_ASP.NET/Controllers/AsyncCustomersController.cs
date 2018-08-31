@@ -103,8 +103,15 @@ namespace Assignment4_ASP.NET.Controllers
             {
                 if (concurrencyError.GetValueOrDefault())
                 {
-                    return RedirectToAction("Index");
+                    ViewBag.ConcurrencyErrorMessage = "The record you attempted to delete "
+                    + "was modified by another user after you got the original values. "
+                    + "The delete operation was canceled and the current values in the "
+                    + "database have been displayed. If you still want to delete this "
+                    + "record, click the Delete button again. Otherwise "
+                    + "click the Back to List hyperlink.";
+                   // return RedirectToAction("Index");
                 }
+                else
                 return HttpNotFound();
             }
             if (concurrencyError.GetValueOrDefault())
@@ -133,6 +140,7 @@ namespace Assignment4_ASP.NET.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
+              
                 return RedirectToAction("Delete", new { concurrencyError = true, id = customer.ID });
             }
             catch (DataException /* dex */)
