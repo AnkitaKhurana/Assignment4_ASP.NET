@@ -18,6 +18,8 @@ namespace Assignment4_ASP.NET.Models
         [DataType(DataType.Date)]
         public DateTime DateOfBirth { get; set; }
 
+        [Timestamp]
+        public byte[] RowVersion { get; set; }
 
         [Range(0, 999.99)]
         public decimal Amount { get; set; }
